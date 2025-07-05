@@ -82,33 +82,29 @@
     }
 
     #musicBtn {
-      background-color: #8a2be2;
+      font-size: 20px;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #ff69b4;
       color: white;
-      border-radius: 8px;
-      padding: 8px 16px;
-      margin-bottom: 20px;
+      border: none;
+      border-radius: 12px;
       cursor: pointer;
-      font-size: 16px;
-      transition: 0.3s;
-    }
-
-    #musicBtn:hover {
-      background-color: #6a1fbf;
     }
   </style>
 </head>
 
 <body>
-  <!-- Audio -->
-  <audio id="bg-audio" loop>
+  <!-- Audio element -->
+  <audio id="bg-audio" preload="auto" loop>
     <source src="careless-whisper.mp3" type="audio/mp3" />
     Your browser does not support the audio element.
   </audio>
 
-  <!-- Play Button -->
-  <button id="musicBtn" onclick="playAudio()">🔊 Play Music</button>
+  <!-- Music Button -->
+  <button id="musicBtn">🔊 Play Music</button>
 
-  <!-- Main Content -->
+  <!-- Main interaction -->
   <div id="main">
     <img src="ok.jpg" class="kitten" alt="cute kitten" />
     <div id="question">Do you love me, Ma'am? 💖</div>
@@ -116,7 +112,7 @@
     <button class="btn no" id="noBtn" onclick="noClicked()">No 😝</button>
   </div>
 
-  <!-- Result Section -->
+  <!-- Result after saying yes -->
   <div id="result">
     <img src="https://media.tenor.com/WCMJZ8nkkY0AAAAM/cute-kitten.gif" class="kitten" />
     <div class="hearts">💞 Sanju & Ma'am 💘</div>
@@ -126,7 +122,6 @@
     <canvas id="confettiCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;"></canvas>
   </div>
 
-  <!-- Script -->
   <script>
     const noBtn = document.getElementById("noBtn");
     const questionEl = document.getElementById("question");
@@ -152,14 +147,8 @@
     function yesClicked() {
       document.getElementById("main").style.display = "none";
       document.getElementById("result").style.display = "block";
-      startCountup(new Date("2024-08-08T00:00:00"));
+      startCountup(new Date("2024-08-08T00:00:00")); // Your love date
       launchConfetti();
-    }
-
-    function playAudio() {
-      const audio = document.getElementById("bg-audio");
-      audio.play();
-      document.getElementById("musicBtn").style.display = "none"; // Hide button after click
     }
 
     function startCountup(startDate) {
@@ -180,9 +169,7 @@
       const ctx = canvas.getContext("2d");
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      const hearts = Array.from({
-        length: 75
-      }, () => ({
+      const hearts = Array.from({ length: 75 }, () => ({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         speed: Math.random() * 3 + 1,
@@ -206,6 +193,20 @@
       }
       draw();
     }
+
+    // Music button click logic
+    document.getElementById("musicBtn").addEventListener("click", function () {
+      const audio = document.getElementById("bg-audio");
+      audio.play()
+        .then(() => {
+          console.log("Audio started 🎶");
+          document.getElementById("musicBtn").style.display = "none";
+        })
+        .catch(err => {
+          console.error("Playback failed:", err);
+          alert("⚠️ Audio playback blocked. Please click again.");
+        });
+    });
   </script>
 </body>
 
