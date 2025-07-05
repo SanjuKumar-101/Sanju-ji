@@ -21,7 +21,7 @@
       position: relative;
       width: 100px;
       height: 90px;
-      transform: rotate(-45deg);
+      margin-bottom: 40px;
       animation: pulse 1s infinite;
     }
 
@@ -29,25 +29,29 @@
     .heart::after {
       content: "";
       position: absolute;
-      width: 100px;
+      width: 60px;
       height: 100px;
       background: #ff69b4;
       border-radius: 50%;
     }
 
     .heart::before {
-      top: -50px;
       left: 0;
-    }
-
-    .heart::after {
-      left: 50px;
       top: 0;
     }
 
+    .heart::after {
+      left: 40px;
+      top: 0;
+    }
+
+    .heart {
+      transform: rotate(-45deg);
+    }
+
     @keyframes pulse {
-      0% { transform: rotate(-45deg) scale(1); }
-      50% { transform: rotate(-45deg) scale(1.1); }
+      0%   { transform: rotate(-45deg) scale(1); }
+      50%  { transform: rotate(-45deg) scale(1.1); }
       100% { transform: rotate(-45deg) scale(1); }
     }
 
