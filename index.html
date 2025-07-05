@@ -80,15 +80,35 @@
         transform: translateY(0);
       }
     }
+
+    #musicBtn {
+      background-color: #8a2be2;
+      color: white;
+      border-radius: 8px;
+      padding: 8px 16px;
+      margin-bottom: 20px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    #musicBtn:hover {
+      background-color: #6a1fbf;
+    }
   </style>
 </head>
 
 <body>
-  <audio autoplay loop>
-    <source src="Careless Whisper.mp3" type="audio/mp3">
+  <!-- Audio -->
+  <audio id="bg-audio" loop>
+    <source src="careless-whisper.mp3" type="audio/mp3" />
     Your browser does not support the audio element.
   </audio>
 
+  <!-- Play Button -->
+  <button id="musicBtn" onclick="playAudio()">🔊 Play Music</button>
+
+  <!-- Main Content -->
   <div id="main">
     <img src="ok.jpg" class="kitten" alt="cute kitten" />
     <div id="question">Do you love me, Ma'am? 💖</div>
@@ -96,6 +116,7 @@
     <button class="btn no" id="noBtn" onclick="noClicked()">No 😝</button>
   </div>
 
+  <!-- Result Section -->
   <div id="result">
     <img src="https://media.tenor.com/WCMJZ8nkkY0AAAAM/cute-kitten.gif" class="kitten" />
     <div class="hearts">💞 Sanju & Ma'am 💘</div>
@@ -105,6 +126,7 @@
     <canvas id="confettiCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;"></canvas>
   </div>
 
+  <!-- Script -->
   <script>
     const noBtn = document.getElementById("noBtn");
     const questionEl = document.getElementById("question");
@@ -130,8 +152,14 @@
     function yesClicked() {
       document.getElementById("main").style.display = "none";
       document.getElementById("result").style.display = "block";
-      startCountup(new Date("2024-08-08T00:00:00")); // 🎯 Your love date
+      startCountup(new Date("2024-08-08T00:00:00"));
       launchConfetti();
+    }
+
+    function playAudio() {
+      const audio = document.getElementById("bg-audio");
+      audio.play();
+      document.getElementById("musicBtn").style.display = "none"; // Hide button after click
     }
 
     function startCountup(startDate) {
@@ -167,7 +195,7 @@
         hearts.forEach(h => {
           ctx.globalAlpha = h.opacity;
           ctx.font = `${h.size}px serif`;
-          ctx.fillText("❤️ Sanju & Ma;am 💙", h.x, h.y);
+          ctx.fillText("❤️", h.x, h.y);
           h.y += h.speed;
           if (h.y > canvas.height) {
             h.y = -20;
