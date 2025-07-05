@@ -18,10 +18,10 @@
     }
 
     .heart {
-      width: 200px;
-      height: 180px;
       position: relative;
-      margin-bottom: 40px;
+      width: 100px;
+      height: 90px;
+      transform: rotate(-45deg);
       animation: pulse 1s infinite;
     }
 
@@ -29,25 +29,26 @@
     .heart::after {
       content: "";
       position: absolute;
-      top: 0;
       width: 100px;
-      height: 160px;
+      height: 100px;
       background: #ff69b4;
-      border-radius: 50px 50px 0 0;
-      transform: rotate(-45deg);
-      transform-origin: 0 100%;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -50px;
+      left: 0;
     }
 
     .heart::after {
-      left: 100px;
-      transform: rotate(45deg);
-      transform-origin: 100% 100%;
+      left: 50px;
+      top: 0;
     }
 
     @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
+      0% { transform: rotate(-45deg) scale(1); }
+      50% { transform: rotate(-45deg) scale(1.1); }
+      100% { transform: rotate(-45deg) scale(1); }
     }
 
     h1 {
@@ -64,10 +65,13 @@
       border: none;
       border-radius: 12px;
       cursor: pointer;
+      box-shadow: 0 4px 10px rgba(255, 105, 180, 0.4);
+      transition: all 0.3s ease;
     }
 
     button:hover {
       background-color: #ff85c1;
+      transform: scale(1.05);
     }
   </style>
 </head>
