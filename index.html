@@ -1,213 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sanju ❤️ Ma'am</title>
+  <title>I have a question ❤️</title>
   <style>
     body {
+      margin: 0;
       font-family: 'Comic Sans MS', cursive, sans-serif;
-      background: linear-gradient(135deg, #ffe4e1, #fff0f5);
+      background: linear-gradient(to right, #ffd1dc, #ffe4e1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
       text-align: center;
-      padding: 40px;
-      overflow: hidden;
     }
 
-    #question {
-      font-size: 28px;
-      margin-bottom: 20px;
-      color: #e75480;
-      min-height: 60px;
+    .heart {
+      width: 200px;
+      height: 180px;
+      position: relative;
+      margin-bottom: 40px;
+      animation: pulse 1s infinite;
     }
 
-    .kitten {
-      width: 250px;
-      border-radius: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    }
-
-    .btn {
-      font-size: 20px;
-      padding: 10px 20px;
-      margin: 10px;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .yes {
-      background-color: #ff69b4;
-      color: white;
-    }
-
-    .no {
-      background-color: #d3d3d3;
-      color: black;
+    .heart::before,
+    .heart::after {
+      content: "";
       position: absolute;
+      top: 0;
+      width: 100px;
+      height: 160px;
+      background: #ff69b4;
+      border-radius: 50px 50px 0 0;
+      transform: rotate(-45deg);
+      transform-origin: 0 100%;
     }
 
-    #result {
-      display: none;
-      margin-top: 30px;
-      font-size: 24px;
-      color: #ff1493;
+    .heart::after {
+      left: 100px;
+      transform: rotate(45deg);
+      transform-origin: 100% 100%;
     }
 
-    .hearts {
-      font-size: 36px;
-      animation: float 2s infinite;
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
     }
 
-    #countup {
-      font-size: 18px;
-      margin-top: 10px;
-      color: #8b0000;
+    h1 {
+      color: #e75480;
+      font-size: 28px;
+      margin-bottom: 30px;
     }
 
-    @keyframes float {
-      0% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(-10px);
-      }
-
-      100% {
-        transform: translateY(0);
-      }
-    }
-
-    #musicBtn {
+    button {
       font-size: 20px;
-      margin-top: 15px;
-      padding: 10px 20px;
+      padding: 12px 24px;
       background-color: #ff69b4;
       color: white;
       border: none;
       border-radius: 12px;
       cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #ff85c1;
     }
   </style>
 </head>
-
 <body>
-  <!-- Audio element -->
-  <audio id="bg-audio" preload="auto" loop>
-    <source src="careless-whisper.mp3" type="audio/mp3" />
-    Your browser does not support the audio element.
-  </audio>
-
-  <!-- Music Button -->
-  <button id="musicBtn">🔊 Play Music</button>
-
-  <!-- Main interaction -->
-  <div id="main">
-    <img src="ok.jpg" class="kitten" alt="cute kitten" />
-    <div id="question">Do you love me, Ma'am? 💖</div>
-    <button class="btn yes" onclick="yesClicked()">Yes 😚</button>
-    <button class="btn no" id="noBtn" onclick="noClicked()">No 😝</button>
-  </div>
-
-  <!-- Result after saying yes -->
-  <div id="result">
-    <img src="https://media.tenor.com/WCMJZ8nkkY0AAAAM/cute-kitten.gif" class="kitten" />
-    <div class="hearts">💞 Sanju & Ma'am 💘</div>
-    <p>Sanju & Ma'am — meant to be since forever 💍</p>
-    <p>You said yes, Ma'am! You're officially stuck with this lovable idiot 😚</p>
-    <div id="countup">Loading timer…</div>
-    <canvas id="confettiCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;"></canvas>
-  </div>
-
-  <script>
-    const noBtn = document.getElementById("noBtn");
-    const questionEl = document.getElementById("question");
-    const questions = [
-      "Please love me, Ma'am 😢",
-      "I know you have feelings for me 💘",
-      "You don't have any other option 😜",
-      "Say yes na beauty 💞",
-      "Ma'am, don’t lie! You love me 😍",
-      "Even you know you love me 😽"
-    ];
-    let questionIndex = 0;
-
-    function noClicked() {
-      const x = Math.random() * (window.innerWidth - 150);
-      const y = Math.random() * (window.innerHeight - 150);
-      noBtn.style.left = x + 'px';
-      noBtn.style.top = y + 'px';
-      questionIndex = (questionIndex + 1) % questions.length;
-      questionEl.innerText = questions[questionIndex];
-    }
-
-    function yesClicked() {
-      document.getElementById("main").style.display = "none";
-      document.getElementById("result").style.display = "block";
-      startCountup(new Date("2024-08-08T00:00:00")); // Your love date
-      launchConfetti();
-    }
-
-    function startCountup(startDate) {
-      setInterval(() => {
-        const now = new Date();
-        const diff = now - startDate;
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const mins = Math.floor((diff / (1000 * 60)) % 60);
-        const secs = Math.floor((diff / 1000) % 60);
-        document.getElementById("countup").innerText =
-          `Loving you since: ${days}d ${hours}h ${mins}m ${secs}s 💗`;
-      }, 1000);
-    }
-
-    function launchConfetti() {
-      const canvas = document.getElementById("confettiCanvas");
-      const ctx = canvas.getContext("2d");
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      const hearts = Array.from({ length: 75 }, () => ({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        speed: Math.random() * 3 + 1,
-        size: Math.random() * 20 + 10,
-        opacity: Math.random()
-      }));
-
-      function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        hearts.forEach(h => {
-          ctx.globalAlpha = h.opacity;
-          ctx.font = `${h.size}px serif`;
-          ctx.fillText("❤️", h.x, h.y);
-          h.y += h.speed;
-          if (h.y > canvas.height) {
-            h.y = -20;
-            h.x = Math.random() * canvas.width;
-          }
-        });
-        requestAnimationFrame(draw);
-      }
-      draw();
-    }
-
-    // Music button click logic
-    document.getElementById("musicBtn").addEventListener("click", function () {
-      const audio = document.getElementById("bg-audio");
-      audio.play()
-        .then(() => {
-          console.log("Audio started 🎶");
-          document.getElementById("musicBtn").style.display = "none";
-        })
-        .catch(err => {
-          console.error("Playback failed:", err);
-          alert("⚠️ Audio playback blocked. Please click again.");
-        });
-    });
-  </script>
+  <div class="heart"></div>
+  <h1>I have a question for you?</h1>
+  <a href="love.html">
+    <button>Let's Go 💖</button>
+  </a>
 </body>
-
 </html>
